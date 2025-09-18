@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -7,11 +6,13 @@ import ThemeToggle from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import shivlokLogo from "@/assets/shivlok-title-img.png";
 
 export default function Navbar() {
   const { t } = useLanguage();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -70,6 +71,32 @@ export default function Navbar() {
           <Button onClick={handleBookingClick} className="btn-primary">
             {t.nav.bookNow}
           </Button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="rounded-full focus:outline-none">
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback>
+                      {((user.user_metadata as any)?.first_name?.[0] || user.email?.[0] || "U").toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel className="max-w-[240px] truncate">{user.email}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="outline">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          )}
         </div>
 
         {/* Mobile Navigation */}
@@ -112,6 +139,18 @@ export default function Navbar() {
             <Button onClick={handleBookingClick} className="w-full btn-primary mt-6">
               {t.nav.bookNow}
             </Button>
+            {user ? (
+              <div className="grid grid-cols-2 gap-3 mt-4">
+                <Button asChild variant="outline">
+                  <Link to="/profile">Profile</Link>
+                </Button>
+                <Button variant="outline" onClick={() => signOut()}>Sign Out</Button>
+              </div>
+            ) : (
+              <Button asChild variant="outline" className="w-full mt-4">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 import { format, addDays, differenceInDays } from "date-fns";
@@ -95,11 +94,20 @@ export default function BookingPage() {
   });
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
   
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
-  
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth?redirect=/booking');
+    }
+  }, [user, loading, navigate]);
+
   // Calculate nights and total price
   const nightsCount = startDate && endDate ? differenceInDays(endDate, startDate) : 0;
   const totalPrice = selectedPackage ? selectedPackage.price * nightsCount : 0;
