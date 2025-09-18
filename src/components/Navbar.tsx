@@ -85,8 +85,8 @@ export default function Navbar() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel className="max-w-[240px] truncate">{user.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/profile">Profile</Link>
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
+                  Profile
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>
