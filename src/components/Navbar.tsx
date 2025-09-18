@@ -12,7 +12,7 @@ import shivlokLogo from "@/assets/shivlok-title-img.png";
 
 export default function Navbar() {
   const { t } = useLanguage();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
