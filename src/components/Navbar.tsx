@@ -139,6 +139,18 @@ export default function Navbar() {
             <Button onClick={handleBookingClick} className="w-full btn-primary mt-6">
               {t.nav.bookNow}
             </Button>
+            {user ? (
+              <div className="grid grid-cols-2 gap-3 mt-4">
+                <Button asChild variant="outline">
+                  <Link to="/profile">Profile</Link>
+                </Button>
+                <Button variant="outline" onClick={() => signOut()}>Sign Out</Button>
+              </div>
+            ) : (
+              <Button asChild variant="outline" className="w-full mt-4">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>
