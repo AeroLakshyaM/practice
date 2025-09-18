@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Auth from "./pages/Auth";
 import PackageDetail from "./pages/PackageDetail";
+import Profile from "./pages/Profile";
 
 // Create a react-query client
 const queryClient = new QueryClient();
