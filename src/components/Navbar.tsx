@@ -71,6 +71,32 @@ export default function Navbar() {
           <Button onClick={handleBookingClick} className="btn-primary">
             {t.nav.bookNow}
           </Button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="rounded-full focus:outline-none">
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback>
+                      {((user.user_metadata as any)?.first_name?.[0] || user.email?.[0] || "U").toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel className="max-w-[240px] truncate">{user.email}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/profile">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="outline">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          )}
         </div>
 
         {/* Mobile Navigation */}
